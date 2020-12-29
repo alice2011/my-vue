@@ -26,7 +26,7 @@
                     <label for="">验证码</label>
                     <el-row :gutter="10">
                         <el-col :span="15"><el-input v-model.number="ruleForm.code" size="small" minlength="6" maxlength="6"></el-input></el-col>
-                        <el-col :span="9"><el-button type="success" class="block" size="small" @click="getSms()">验证码</el-button></el-col>
+                        <el-col :span="9"><el-button type="success" class="block" size="small">验证码</el-button></el-col>
                     </el-row>
                 </el-form-item>
                 <el-form-item>
@@ -38,8 +38,6 @@
     </div>
 </template>
 <script>
-import { GetSms } from '@/api/login'
-
 import {isRef, onMounted, reactive,ref, toRefs} from '@vue/composition-api'
 import { stripscript,validateEmail,validatePass,validateCode } from '@/utils/validate.js'
 export default{
@@ -71,7 +69,7 @@ export default{
             }
         };
         //验证重复密码
-        let validatePasswords = (rule, value, callback) => {``
+        let validatePasswords = (rule, value, callback) => {
             //如果模块值为login就直接跳过
             if(model.value==='login') { callback(); }
             //过滤后的数据
@@ -143,16 +141,6 @@ export default{
             model.value=data.type
         })
 
-        //获取验证码
-        const getSms = (() => {
-            let data = {
-                username:ruleForm.username
-            }
-
-            GetSms(data)
-        })
-
-        //提交表单
         const submitForm = (formName => {
             context.refs[formName].validate((valid) => {
             if (valid) {
@@ -169,7 +157,7 @@ export default{
          */
         //挂载完成后
         onMounted(()=>{
-            
+
         })
 
         return {
@@ -178,8 +166,7 @@ export default{
             ruleForm,
             rules,
             toggleMenu,
-            submitForm,
-            getSms
+            submitForm
         }
 
         
