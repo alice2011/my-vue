@@ -39,7 +39,7 @@
 </template>
 <script>
 import { Message } from 'element-ui'
-import { GetSms,Register } from '@/api/login'
+import { GetSms,Login,Register } from '@/api/login'
 
 import {isRef, onMounted, reactive,ref, toRefs} from '@vue/composition-api'
 import { stripscript,validateEmail,validatePass,validateCode } from '@/utils/validate'
@@ -155,7 +155,18 @@ export default{
             //修改模块值
             model.value=data.type
             //重置表单
+            resetFromData()
+            clearCountDown()
+        })
+        //清除表单数据
+        const resetFromData = (() => {
             context.refs['ruleForm'].resetFields();
+        })
+
+        //更新按钮状态
+        const updataButtonStatus = ((params) => {
+            codeBtnStatus.status = params.status;
+            codeBtnStatus.text=params.text;
         })
 
         //获取验证码
@@ -175,8 +186,11 @@ export default{
                 model:model.value
             }
 
-            codeBtnStatus.status = true
-            codeBtnStatus.text="发送中"
+            //修改获取验证码按钮状态
+            updataButtonStatus({
+                status:true,
+                text:'发送中'
+            })
 
             setTimeout(() => {
                 GetSms(requestData).then(response => {
@@ -203,23 +217,10 @@ export default{
         //提交表单
         const submitForm = (formName => {
             context.refs[formName].validate((valid) => {
+            //表单验证通过
             if (valid) {
-                let requestData = {
-                    username:ruleForm.username,
-                    password:ruleForm.password,
-                    code:ruleForm.code,
-                    model:'register'
-                }
-                Register(requestData).then(response =>{
-                    let data = response.data
-                    context.root.$message({
-                        message:data.message,
-                        type:'success'
-                    })
-                }).catch(error => {
-
-                })
-                alert('submit!');
+                //三元运算
+                model.value === 'login' ? login() : register();
             } else {
                 console.log('error submit!!');
                 return false;
@@ -227,21 +228,80 @@ export default{
             });
         })
 
-        //获取验证码后显示倒计时
+        /**
+         * 登录
+         */
+        const login=(() => {
+            let requestData = {
+                username:ruleForm.username,
+                password:ruleForm.password,
+                code:ruleForm.code
+            }
+            Login(requestData).then(response => {
+                console.log('登录成功')
+                console.log(response)
+            }).catch(error => {
+                
+            })
+        })
+
+        /**
+         * 注册
+         */
+        const register = (() => {
+            let requestData = {
+                username:ruleForm.username,
+                password:ruleForm.password,
+                code:ruleForm.code,
+                model:'register'
+            }
+            Register(requestData).then(response =>{
+                let data = response.data
+                context.root.$message({
+                    message:data.message,
+                    type:'success'
+                })
+                //模拟注册成功
+                toggleMenu(menuTab[0]);
+                clearCountDown();
+            }).catch(error => {
+
+            })
+        })
+
+        /**
+         * 倒计时
+         */
         const countDown = ((number) => {
             let time = number
             timer.value = setInterval(() => {
                 time--
                 if(time === 0){
                     clearInterval(timer.value)
-                    codeBtnStatus.status = false
-                    codeBtnStatus.text='再次获取'
+                    //修改获取验证码按钮状态
+                    updataButtonStatus({
+                        status:false,
+                        text:'再次获取'
+                    })
                 } else{
-                    codeBtnStatus.text=`倒计时${time}秒`
+                    codeBtnStatus.text=`倒计时${time}秒` //es6写法
                 }
                 
                 console.log(time)
             },1000)
+        })
+
+        /**
+         * 清除倒计时
+         */
+        const clearCountDown = (() => {
+            //还原验证码按钮默认状态
+            updataButtonStatus({
+                status:false,
+                text:'获取验证码'
+            })
+            //清除倒计时
+            clearInterval(timer.value);
         })
 
         /**

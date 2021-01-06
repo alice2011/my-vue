@@ -18,6 +18,13 @@ export function GetSms(data){
  /**
  * 登录
  */
+export function Login(data){
+    return service.request({
+        url:'/login/',
+        method:'post',
+        data
+    })
+}
 
  /**
  * 注册

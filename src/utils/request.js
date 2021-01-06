@@ -9,8 +9,20 @@ const service = axios.create({
 });
 
 // 添加请求拦截器
+/**
+ * 请求接口前，做一些数据处理
+ */
 service.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
+    //后台需要前端这边传相关的参数（在请求头添加参数）
+    //Tokey,userId,sui
+    console.log(config.headers)
+    //业务需求
+
+
+    //最终目的是在请求头添加参数
+    config.headers.Tokey='111111';
+
     return config;
   }, function (error) {
     // 对请求错误做些什么
@@ -18,6 +30,9 @@ service.interceptors.request.use(function (config) {
   });
 
 // 添加响应拦截器
+/**
+ * 请求接口后，返回数据进行拦截
+ */
 service.interceptors.response.use(function (response) {
     // 对响应数据做点什么
     let data = response.data
