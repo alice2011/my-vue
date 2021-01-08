@@ -240,6 +240,10 @@ export default{
             Login(requestData).then(response => {
                 console.log('登录成功')
                 console.log(response)
+                //页面跳转
+                context.root.$router.push({
+                    name:'Console'
+                })
             }).catch(error => {
                 
             })
