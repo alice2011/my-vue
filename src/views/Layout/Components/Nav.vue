@@ -13,7 +13,7 @@
                 <el-submenu v-if="!item.hidden" :key="item.id" :index="index + ''">
                     <!-- 一级菜单 -->
                     <template slot="title">
-                    <i class="el-icon-location"></i>
+                    <svg-icon :iconClass="item.meta.icon" :className="item.meta.icon" />
                     <span slot="title">{{ item.meta.name }}</span>
                     </template>
                     <!-- 子菜单 -->
@@ -35,7 +35,6 @@ export default {
          */
         const isCollapse = ref(false);
         const routers = reactive(root.$router.options.routes);
-        console.log(routers);
 
         /**
          * 函数
@@ -64,5 +63,9 @@ export default {
     width:250px;
     height:100vh;
     background-color: #344a5f;
+    svg{
+        font-size:25px;
+        margin-right:10px;
+    }
 }
 </style>
