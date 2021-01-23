@@ -3,24 +3,12 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+import app from "./moudle/app"
+import login from "./moudle/login"
+
 export default new Vuex.Store({
-  state: {
-    isCollapse:false,
-    count:10
-  },
-  getters:{
-    count:state => state.count + 10
-  },
-  mutations: {
-    SET_COLLAPSE(state){
-      state.isCollapse = !state.isCollapse
-      console.log(state.isCollapse)
-    },
-    SET_COUNT(state,value){
-      state.count = value
-      console.log(state.count)
-    }
-  },
-  actions: {},
-  modules: {}
+  modules:{
+    app,
+    login
+  }
 });

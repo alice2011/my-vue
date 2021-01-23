@@ -7,3 +7,21 @@
 .el-submenu {
     &.is-active.is-opened .el-submenu__title{ background-color:$mainCcolor !important; }
 }
+
+.close{
+    .el-submenu{
+        &.is-opened{
+            >.el-submenu__title{
+                background-color: $mainCcolor !important;
+            }
+        }
+    }
+}
+.el-menu--vertical{
+    > ul{
+        background-color: $mainCcolor !important;
+        > .el-menu-item:hover{
+            background-color: rgb(204,204,204) !important;
+        }
+    }
+}

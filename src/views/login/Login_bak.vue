@@ -232,15 +232,18 @@ export default{
          * 登录
          */
         const login=(() => {
-            let requestData= {
+            let requestData = {
                 username:ruleForm.username,
                 password:ruleForm.password,
                 code:ruleForm.code
             }
 
-            context.root.$store.dispatch('app/login',requestData).then(response => {
+            context.root.$store.dispatch('login',requestData).then(response => {
+                console.log('登录成功')
+                console.log(response)
+                //页面跳转
                 context.root.$router.push({
-                    name:"Console"
+                    name:'Console'
                 })
             }).catch(error => {
 

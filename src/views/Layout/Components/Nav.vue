@@ -3,9 +3,7 @@
         <h1 class="logo"><img src="../../../assets/logo2.png" alt=""></h1>
         <el-menu 
          default-active="1-4-1" 
-         class="el-menu-vertical-demo" 
-         @open="handleOpen" 
-         @close="handleClose" 
+         class="el-menu-vertical-demo"  
          :collapse="isCollapse" 
          background-color="transparent" 
          text-color="#fff" 
@@ -40,28 +38,16 @@ export default {
         /**
          * computed 监听
          */
-        const isCollapse = computed(() => root.$store.state.isCollapse) 
-
-        /**
-         * 函数
-         */
-        const handleOpen = (key, keyPath) => {
-            console.log(key, keyPath);
-        }
-        const handleClose = (key, keyPath) => {
-            console.log(key, keyPath);
-        }
+        const isCollapse = computed(() => root.$store.state.app.isCollapse) 
 
         //打印store
-        console.log(root.$store.state.count)
-        console.log(root.$store.getters.count)
-        root.$store.commit('SET_COUNT',100)
+        // console.log(root.$store.state.app.count)
+        // console.log(root.$store.app.getters.count)
+        // root.$store.app.commit('SET_COUNT',100)
 
         return {
             isCollapse,
-            routers,
-            handleOpen,
-            handleClose
+            routers
         }
     }
 }
@@ -70,6 +56,9 @@ export default {
 .logo{
     margin:0;
     text-align: center;
+    img{
+        @include webkit(transition,all .3s ease 0s)
+    }
 }
 #nav-wrap{
     position:fixed;
@@ -92,6 +81,9 @@ export default {
 .close {
     #nav-wrap{
         width:64px;
+    }
+    .logo img{
+        width:70%;
     }
 }
 </style>

@@ -26,7 +26,7 @@ export default new Router({
     },
     {
       path:"/console",
-      name:"console",
+      name:"Console",
       redirect:"index",
       meta:{
         name:'控制台',
