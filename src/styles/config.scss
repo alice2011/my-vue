@@ -14,3 +14,15 @@ $mainCcolor:#f56c6c;
     -ms-#{$type}:$value;
     #{$type}:$value;
 }
+
+@mixin labelDom($align,$width,$line-height:"normal"){
+    label{
+        float:left;
+        line-height: $line-height + px;
+        width:$width;
+        text-align:$align;
+    }
+    .wrap-content{
+        margin-left:$width;
+    }
+}

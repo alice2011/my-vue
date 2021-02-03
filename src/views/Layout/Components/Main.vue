@@ -1,29 +1,29 @@
 <template>
     <div id="main-wrap">
         <div class="main-content">
-            <div class="content">{{ bbb }}</div>
+            <div class="content">
+                <router-view />
+            </div>
         </div>
-        <router-view />
     </div>
 </template>
 <script>
 import {ref,reactive} from '@vue/composition-api'
 export default {
     setup(props,{ root }){
-        const bbb = root.$store.state.login.aaa
+        // const bbb = root.$store.state.login.aaa
 
-        const json = reactive({
-            "name":"vue学习",
-            "title":"aaa"
-        });
-        console.log(json)
+        // const json = reactive({
+        //     "name":"vue学习",
+        //     "title":"aaa"
+        // });
 
-        const toString = ref(JSON.stringify(json))
-        console.log(toString.value)
+        // const toString = ref(JSON.stringify(json))
+        // console.log(toString.value)
 
-        return {
-            bbb
-        }
+        // return {
+        //     bbb
+        // }
 
     }
 }
